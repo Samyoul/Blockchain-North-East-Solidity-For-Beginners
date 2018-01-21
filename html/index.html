@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Blockchain North East - 2018-01-22</title>
+  </head>
+  <body>
+	<div class="container">
+		<div class="jumbotron">
+			<h1>Blockchain North East</h1>
+			<h2>Solidity Beginner's Guide - 2018-01-22</h2>
+		</div>
+		
+		
+		<h3>Attendee Info</h3>
+		
+		<!-- isAttendee -->
+		<form id="isAttendeeForm">
+			
+			<div class="row">
+				<div class="col-md-8">
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Are they attending?</span>
+						</div>
+						<input type="text" class="form-control" id="isAttendee" placeholder="Attendee Address">
+					</div>
+				</div>
+				<div class="col-md-2">
+					<button class="btn btn-primary btn-block" type="submit">Submit</button>
+				</div>
+				<div class="col-md-2">
+					<span class="input-group-text answer" id="isAttendeeAnswer">...</span>
+				</div>
+			</div>
+		</form>
+		
+		<!-- isAttendeeMe -->
+		<form id="isAttendeeMeForm">
+		
+			<div class="row mb-3">
+				<div class="offset-md-8 col-md-2">
+					<button class="btn btn-primary btn-block" type="submit">Am I attending?</button>
+				</div>
+				<div class="col-md-2">
+					<span class="input-group-text answer" id="isAttendeeMeAnswer">...</span>
+				</div>
+			</div>
+		</form>
+		
+		<!-- getAttendeeCount -->
+		<form id="getAttendeeCountForm">
+		
+			<div class="row mb-3">
+				<div class="offset-md-8 col-md-2">
+					<button class="btn btn-primary btn-block" type="submit">Number attending?</button>
+				</div>
+				<div class="col-md-2">
+					<span class="input-group-text answer" id="getAttendeeCountAnswer">...</span>
+				</div>
+			</div>
+		</form>
+		
+		<!-- addAttendee -->
+		<form id="addAttendeeForm">
+		
+			<div class="row mb-3">
+				<div class="offset-md-8 col-md-2">
+						<button class="btn btn-success btn-block" type="submit">Register</button>
+				</div>
+				<div class="col-md-2">
+					<span class="input-group-text answer" id="addAttendeeAnswer">...</span>
+				</div>
+			</div>
+		</form>
+		
+		<!-- removeAttendee -->
+		<form id="removeAttendeeForm">
+		
+			<div class="row mb-3">
+				<div class="offset-md-8 col-md-2">
+					<button class="btn btn-danger btn-block" type="submit">Deregister</button>
+				</div>
+				<div class="col-md-2">
+					<span class="input-group-text answer" id="removeAttendeeAnswer">...</span>
+				</div>
+			</div>
+		</form>
+		
+		
+		<hr/>
+		<h3>Organiser Info</h3>
+		
+		<!-- isOrganiser -->
+		<form id="isOrganiserForm">
+			
+			<div class="row">
+				<div class="col-md-8">
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Are they an organiser?</span>
+						</div>
+						<input type="text" class="form-control" id="isOrganiserAddress" placeholder="Organiser Address">
+					</div>
+				</div>
+				<div class="col-md-2">
+					<button class="btn btn-primary btn-block" type="submit">Submit</button>
+				</div>
+				<div class="col-md-2">
+					<span class="input-group-text answer" id="isOrganiserAnswer">...</span>
+				</div>
+			</div>
+		</form>
+		
+		<!-- isOrganiserMe -->
+		<form id="isOrganiserMeForm">
+		
+			<div class="row mb-3">
+				<div class="offset-md-8 col-md-2">
+					<button class="btn btn-primary btn-block" type="submit">Am I an Organiser?</button>
+				</div>
+				<div class="col-md-2">
+					<span class="input-group-text answer" id="isOrganiserMeAnswer">...</span>
+				</div>
+			</div>
+		</form>
+		
+	</div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	
+	<!-- Web3 -->
+    <script src="web3.min.js"></script>
+	
+	<script>
+		if(typeof web3 !== 'undefined') {
+			web3 = new Web3(web3.currentProvider);
+		}
+		else{
+			web3 = new Web3(new Web3.providers.HttpProvider("HTTP://127.0.0.1:7545"));
+		}
+		
+		var accounts = web3.eth.getAccounts().then(console.log);
+		
+		web3.eth.defaultAccount = "0x627306090abab3a6e1400e9345bc60c78a8bef57";
+		
+		contractABI = 
+		[
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"name": "_organiser",
+						"type": "address"
+					}
+				],
+				"name": "isOrganiser",
+				"outputs": [
+					{
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"name": "_address",
+						"type": "address"
+					}
+				],
+				"name": "isAttendee",
+				"outputs": [
+					{
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "getAttendeeCount",
+				"outputs": [
+					{
+						"name": "",
+						"type": "uint128"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "_attendee",
+						"type": "address"
+					}
+				],
+				"name": "addAttendee",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "_organiser",
+						"type": "address"
+					}
+				],
+				"name": "addOrganiser",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "_attendee",
+						"type": "address"
+					}
+				],
+				"name": "removeAttendee",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"name": "_organiser",
+						"type": "address"
+					}
+				],
+				"name": "removeOrganiser",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			}
+		];
+		
+		var BlockchainNorthEastContract = new web3.eth.Contract(
+			contractABI,
+			"0x0d8cc4b8d15d4c3ef1d70af0071376fb26b5669b"
+		);
+		
+		console.log(BlockchainNorthEastContract);
+		
+		/******************************************/
+		
+		var $answers = $('span');
+		console.log($answers);
+		console.log($answers.length);
+		
+		function resetAnswers(){
+			$('.answer').each( function(i, obj){
+				$(this).html("...");
+			})
+		}
+		
+		var $isAttendeeForm = $('#isAttendeeForm');
+		var $isAttendeeAddress = $('#isAttendee');
+		var $isAttendeeAnswer = $('#isAttendeeAnswer');
+		
+		$isAttendeeForm.submit( function(event){
+			event.preventDefault();
+			resetAnswers();
+			
+			BlockchainNorthEastContract.methods
+				.isAttendee($isAttendeeAddress.val())
+				.call(function(error, result){
+					if(!error){
+						var answer = result? "Yes": "No";
+						$isAttendeeAnswer.html(answer);
+						console.log(result);
+					} else {
+						console.log(error);
+					}
+				});
+		});
+		
+		
+		var $isAttendeeMeForm = $('#isAttendeeMeForm');
+		var $isAttendeeMeAnswer = $('#isAttendeeMeAnswer');
+		
+		$isAttendeeMeForm.submit( function(event){
+			event.preventDefault();
+			resetAnswers();
+			
+			BlockchainNorthEastContract.methods
+				.isAttendee(web3.eth.defaultAccount)
+				.call(function(error, result){
+					if(!error){
+						var answer = result? "Yes": "No";
+						$isAttendeeMeAnswer.html(answer);
+						console.log(result);
+					} else {
+						console.log(error);
+					}
+				});
+		});
+		
+		
+		var $getAttendeeCountForm = $('#getAttendeeCountForm');
+		var $getAttendeeCountAnswer = $('#getAttendeeCountAnswer');
+		
+		$getAttendeeCountForm.submit( function(event){
+			event.preventDefault();
+			resetAnswers();
+			
+			BlockchainNorthEastContract.methods
+				.getAttendeeCount()
+				.call(function(error, result){
+					if(!error){
+						$getAttendeeCountAnswer.html(result);
+						console.log(result);
+					} else {
+						console.log(error);
+					}
+				});
+		});
+		
+		
+		var $addAttendeeForm = $('#addAttendeeForm');
+		var $addAttendeeAnswer = $('#addAttendeeAnswer');
+		
+		$addAttendeeForm.submit( function(event){
+			event.preventDefault();
+			resetAnswers();
+			
+			BlockchainNorthEastContract.methods
+				.addAttendee(web3.eth.defaultAccount)
+				.send({from: web3.eth.defaultAccount},
+					function(error, result){
+						if(!error){
+							$addAttendeeAnswer.html("Success");
+							console.log(result);
+						} else {
+							$addAttendeeAnswer.html("Fail!");
+							console.log(error);
+						}
+					}
+				);
+		});
+		
+		
+		var $removeAttendeeForm = $('#removeAttendeeForm');
+		var $removeAttendeeAnswer = $('#removeAttendeeAnswer');
+		
+		$removeAttendeeForm.submit( function(event){
+			event.preventDefault();
+			resetAnswers();
+			
+			BlockchainNorthEastContract.methods
+				.removeAttendee(web3.eth.defaultAccount)
+				.send({from: web3.eth.defaultAccount},
+					function(error, result){
+						if(!error){
+							$removeAttendeeAnswer.html("Success");
+							console.log(result);
+						} else {
+							$removeAttendeeAnswer.html("Fail!");
+							console.log(error);
+						}
+					}
+				);
+		});
+		
+		
+		var $isOrganiserForm = $('#isOrganiserForm');
+		var $isOrganiserAddress = $('#isOrganiserAddress');
+		var $isOrganiserAnswer = $('#isOrganiserAnswer');
+		
+		$isOrganiserForm.submit( function(event){
+			event.preventDefault();
+			resetAnswers();
+			
+			BlockchainNorthEastContract.methods
+				.isOrganiser($isOrganiserAddress.val())
+				.call(function(error, result){
+					if(!error){
+						var answer = result? "Yes": "No";
+						$isOrganiserAnswer.html(answer);
+						console.log(result);
+					} else {
+						console.log(error);
+					}
+				});
+		});
+		
+		
+		var $isOrganiserMeForm = $('#isOrganiserMeForm');
+		var $isOrganiserMeAnswer = $('#isOrganiserMeAnswer');
+		
+		$isOrganiserMeForm.submit( function(event){
+			event.preventDefault();
+			resetAnswers();
+			
+			BlockchainNorthEastContract.methods
+				.isOrganiser(web3.eth.defaultAccount)
+				.call(function(error, result){
+					if(!error){
+						var answer = result? "Yes": "No";
+						$isOrganiserMeAnswer.html(answer);
+						console.log(result);
+					} else {
+						console.log(error);
+					}
+				});
+		});
+	
+	</script>
+  </body>
+</html>
