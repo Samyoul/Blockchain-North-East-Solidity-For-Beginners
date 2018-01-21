@@ -45,8 +45,10 @@ contract BlockchainNorthEast {
     
     function removeAttendee(address _attendee) public onlyByAttendee(_attendee)
     {
-        delete attendees[_attendee];
-        attendeeCount--;
+        if(attendees[_attendee]){
+            delete attendees[_attendee];
+            attendeeCount--;
+        }
     }
     
     function isOrganiser(address _organiser) public view returns (bool)
