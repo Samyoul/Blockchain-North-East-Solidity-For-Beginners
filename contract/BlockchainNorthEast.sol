@@ -19,9 +19,9 @@ contract BlockchainNorthEast {
         _;
     }
     
-    modifier onlyByAttendee()
+    modifier onlyByAttendee(address _attendee)
     {
-        require(attendees[msg.sender]);
+        require(_attendee == msg.sender);
         _;
     }
     
@@ -35,13 +35,15 @@ contract BlockchainNorthEast {
         return attendees[_address];
     }
     
-    function addAttendee(address _attendee) public onlyByAttendee
+    function addAttendee(address _attendee) public onlyByAttendee(_attendee)
     {
-        attendees[_attendee] = true;
-        attendeeCount++;
+        if(!attendees[_attendee]){
+            attendees[_attendee] = true;
+            attendeeCount++;
+        }
     }
     
-    function removedAttendee(address _attendee) public onlyByAttendee
+    function removeAttendee(address _attendee) public onlyByAttendee(_attendee)
     {
         delete attendees[_attendee];
         attendeeCount--;
