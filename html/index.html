@@ -149,9 +149,7 @@
 		else{
 			web3 = new Web3(new Web3.providers.HttpProvider("HTTP://127.0.0.1:7545"));
 		}
-		
-		var accounts = web3.eth.getAccounts().then(console.log);
-		
+				
 		web3.eth.defaultAccount = "0x627306090abab3a6e1400e9345bc60c78a8bef57";
 		
 		contractABI = 
