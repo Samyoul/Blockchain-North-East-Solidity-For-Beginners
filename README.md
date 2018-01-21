@@ -1,5 +1,7 @@
 # Blockchain-North-East-Solidity-For-Beginners
 
+https://docs.google.com/presentation/d/1tZCOUgVF_1sgipIbyFr8JYp6vIibzg3VZ4SM9p_1tqA/edit?usp=sharing
+
 ## Things We’ll Cover
 
 - Things you need to know
